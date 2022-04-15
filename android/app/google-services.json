@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "146002383795",
+    "firebase_url": "https://scavenger-cb335-default-rtdb.firebaseio.com",
+    "project_id": "scavenger-cb335",
+    "storage_bucket": "scavenger-cb335.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146002383795:android:4ebf82ebb218c116a9b1c6",
+        "android_client_info": {
+          "package_name": "com.scavengers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146002383795-0at0t9ej3ho2t8s8gmuu9ju9g3ovsvdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdfI40Csc06cYG2w85DIsLX2SU-l21P-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146002383795-0at0t9ej3ho2t8s8gmuu9ju9g3ovsvdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
