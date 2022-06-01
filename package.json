@@ -63,7 +63,6 @@
     "react-native-swiper-flatlist": "^3.0.16",
     "react-native-udp": "^4.1.5",
     "react-native-vector-icons": "^9.1.0",
-    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "socket.io-client": "^4.4.1",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"

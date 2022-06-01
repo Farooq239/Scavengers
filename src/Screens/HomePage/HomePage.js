@@ -128,10 +128,10 @@ const HomePage = ({props, navigation}) => {
     },
   ]);
   const [alllatitude, setalllatitude] = useState([]);
-  const [button,setbutton]=useState(false);
-  const [locationbutton,setlocationbutton]=useState(false);
-  const [hiding,sethiding]=useState(false);
-  const [newmarker,setnewmarker] = useState([]);
+  const [button, setbutton] = useState(false);
+  const [locationbutton, setlocationbutton] = useState(false);
+  const [hiding, sethiding] = useState(false);
+  const [newmarker, setnewmarker] = useState([]);
   handleMarkerPress = event => {
     const markerID = event.nativeEvent.identifier;
     alert(markerID);
@@ -154,40 +154,33 @@ const HomePage = ({props, navigation}) => {
     }
     return true;
   };
-const onDone = async () => {
-  if(pickupCordss.latitude === 0){
-    alert('Please Enter Starting and Ending Point');
-  }
-  else if(destinationCordss.latitude === 0){
-    alert('Please Enter Ending Point');
-  }
-  else{
-    setOpenView(true);
-    const isValid = checkValid();
-  if (isValid) {
-      pickupCordss,
-      destinationCordss,
-      setLineVisible(true);
-      setVisible(true);
-    const ref = db.ref('Users/').child('/Coords');
-      const Custom_Coords = {
-        newmarker,
-        StartingPoint: pickupCordss,
-        EndingPoint: destinationCordss,
-        City: city,
-        Description: description,
-        StartingAddress: inputcity,
-        EndingAddress: inputcity1,
-        NameOfHunt: namehunt,
+  const onDone = async () => {
+    if (pickupCordss.latitude === 0) {
+      alert('Please Enter Starting and Ending Point');
+    } else if (destinationCordss.latitude === 0) {
+      alert('Please Enter Ending Point');
+    } else {
+      setOpenView(true);
+      const isValid = checkValid();
+      if (isValid) {
+        pickupCordss, destinationCordss, setLineVisible(true);
+        setVisible(true);
+        const ref = db.ref('Users/').child('/Coords');
+        const Custom_Coords = {
+          newmarker,
+          StartingPoint: pickupCordss,
+          EndingPoint: destinationCordss,
+          City: city,
+          Description: description,
+          StartingAddress: inputcity,
+          EndingAddress: inputcity1,
+          NameOfHunt: namehunt,
+        };
+        ref.push(Custom_Coords);
+        setmorepost(true);
       }
-      ref.push(Custom_Coords);
-      setmorepost(true);
-    //   navigation.navigate('UserSideMap', {
-    
-    // });
-  }
-}
-};
+    }
+  };
   //////////////////////      Permissions      /////////////////////////////
   const handleLocationPermission = async () => {
     let permissionCheck = '';
@@ -605,24 +598,22 @@ const onDone = async () => {
   };
   const addMarkers = async (CustomMarkerCords, item2, item3, item4) => {
     try {
-
       newmarker.push({
         CustomMarkerCords: CustomMarkerCords,
         PostName: item2,
         PostDesc: item3,
         PostAddress: item4,
-      })
-      newmarker.forEach(snapshot=>{
+      });
+      newmarker.forEach(snapshot => {
         alllatitude.push({
-        latitude:snapshot.CustomMarkerCords.latitude,
-        longitude:snapshot.CustomMarkerCords.longitude,
+          latitude: snapshot.CustomMarkerCords.latitude,
+          longitude: snapshot.CustomMarkerCords.longitude,
         });
       });
       // console.log(alll);
     } catch (error) {
       console.log(error);
     }
-      
   };
   const showToast = () => {
     ToastAndroid.showWithGravity(
@@ -659,13 +650,12 @@ const onDone = async () => {
     setMarkersAddress([...markersAddress, {Location: address}]);
     showToast();
     refRBSheet2.current.open();
-    if(markers.length===1){
+    if (markers.length === 1) {
       startpoint(newRegion.longitude, newRegion.latitude);
-      alert('Your First Point is Done')
+      alert('Your First Point is Done');
     }
-  
   };
-console.log(newmarker);
+  console.log(newmarker);
   return (
     <SafeAreaView style={styles.MainView}>
       <Header
@@ -673,7 +663,7 @@ console.log(newmarker);
         headerFourComp={true}
         searchPress={() => {
           onDone();
-}}
+        }}
         navigation={navigation}
       />
       <StatusBar barStyle="dark-content" />
@@ -695,7 +685,7 @@ console.log(newmarker);
             onPress={() => {
               allmarkers();
               setbutton(true);
-              }}
+            }}
             initialRegion={{
               ...pickupCordss,
               latitudeDelta: LATITUDE_DELTA,
@@ -863,28 +853,31 @@ console.log(newmarker);
         {/* Search and Posts */}
       </View>
 
-      {button === true ?(
-      <>
-        <View></View>
-      </>
-       ):
-       <View
+      {button === true ? (
+        <>
+          <View></View>
+        </>
+      ) : (
+        <View
           style={{
             position: 'absolute',
             width: Theme.wp('90%'),
-            height:Theme.hp('8%'),
-            backgroundColor:Theme.white,
-            justifyContent:'center',
-            alignItems:'center',
+            height: Theme.hp('8%'),
+            backgroundColor: Theme.white,
+            justifyContent: 'center',
+            alignItems: 'center',
             marginLeft: 20,
             marginTop: Theme.hp('12%'),
-            flexDirection:'row'
+            flexDirection: 'row',
           }}>
-          <Text style={{fontSize:17}}> Click </Text>
-          <Image source={require('../../Assets/marker1.png')} style={{height:20, width:20}} />
-          <Text style={{fontSize:17}}> For the First Post </Text>
+          <Text style={{fontSize: 17}}> Click </Text>
+          <Image
+            source={require('../../Assets/marker1.png')}
+            style={{height: 20, width: 20}}
+          />
+          <Text style={{fontSize: 17}}> For the First Post </Text>
         </View>
-        }
+      )}
 
       {markerBtn === true ? (
         <>
@@ -922,64 +915,76 @@ console.log(newmarker);
         </>
       ) : null}
 
-        {/* Location button map */}
-        { hiding === true ? <>
-
-</>:<>
-<TouchableOpacity
- onPress={() => {
-    setlocationbutton(true);
-    sethiding(true)
-    mapRef.current.animateToRegion({
-      latitude: lat,
-      longitude: long,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-  }}
- style={{position:'absolute', bottom: '5%',right: '5%', width: Theme.wp('15%'),
-    }}>
- <View style={{right: '15%',flex:1}}>
-      <LottieView
-          style={{height:70,width:50}}
-          source={require('../../../dropdown.json')}
-          autoPlay
-          loop
-        />
-      </View>
- <View
-  style={{
-    backgroundColor: Theme.primary,
-    width: Theme.wp('15%'),
-    height: Theme.wp('15%'),
-    borderRadius: 90,
-    alignItems: Theme.align,
-    justifyContent: Theme.align,
-    // position: 'absolute',
-    top: '0%',
-    right: '5%',
-  }}>
-  <MaterialIcons name='my-location' color={Theme.white} size={Theme.iconSize}/>
-</View>
-</TouchableOpacity>
-</>}
-{ locationbutton === true ? (
-  <TouchableOpacity
-  onPress={() => {
-    mapRef.current.animateToRegion({
-      latitude: lat,
-      longitude: long,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-  }}
-  style={styles.wrapPlusBtn}>
-  <MaterialIcons name='my-location' color={Theme.white} size={Theme.iconSize}/>
-  {/* <Image source={require('../../Assets/pin.png')} style={{height:50, width:50}} /> */}
-</TouchableOpacity>
-):
-null
-}
+      {/* Location button map */}
+      {hiding === true ? (
+        <></>
+      ) : (
+        <>
+          <TouchableOpacity
+            onPress={() => {
+              setlocationbutton(true);
+              sethiding(true);
+              mapRef.current.animateToRegion({
+                latitude: lat,
+                longitude: long,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              });
+            }}
+            style={{
+              position: 'absolute',
+              bottom: '5%',
+              right: '5%',
+              width: Theme.wp('15%'),
+            }}>
+            <View style={{right: '15%', flex: 1}}>
+              <LottieView
+                style={{height: 70, width: 50}}
+                source={require('../../../dropdown.json')}
+                autoPlay
+                loop
+              />
+            </View>
+            <View
+              style={{
+                backgroundColor: Theme.primary,
+                width: Theme.wp('15%'),
+                height: Theme.wp('15%'),
+                borderRadius: 90,
+                alignItems: Theme.align,
+                justifyContent: Theme.align,
+                // position: 'absolute',
+                top: '0%',
+                right: '5%',
+              }}>
+              <MaterialIcons
+                name="my-location"
+                color={Theme.white}
+                size={Theme.iconSize}
+              />
+            </View>
+          </TouchableOpacity>
+        </>
+      )}
+      {locationbutton === true ? (
+        <TouchableOpacity
+          onPress={() => {
+            mapRef.current.animateToRegion({
+              latitude: lat,
+              longitude: long,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            });
+          }}
+          style={styles.wrapPlusBtn}>
+          <MaterialIcons
+            name="my-location"
+            color={Theme.white}
+            size={Theme.iconSize}
+          />
+          {/* <Image source={require('../../Assets/pin.png')} style={{height:50, width:50}} /> */}
+        </TouchableOpacity>
+      ) : null}
 
       {/*  First MOdal start */}
       <Modal
@@ -1937,9 +1942,17 @@ null
             style={{
               padding: 20,
             }}>
-            <View style={{backgroundColor:"white"}}>
-            <View style={{flexDirection:'row', alignItems:'center', elevation:3, backgroundColor:"white",marginBottom:10}}>
-              <View style={{
+            <View style={{backgroundColor: 'white'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  elevation: 3,
+                  backgroundColor: 'white',
+                  marginBottom: 10,
+                }}>
+                <View
+                  style={{
                     fontSize: 20,
                     marginTop: 10,
                     // borderRadius: 7,
@@ -1953,28 +1966,45 @@ null
                     // justifyContent:'center',
                     // alignItems:'center'
                   }}>
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    fontSize: 15,
-                    color: '#1596F3',
-                    fontWeight: 'bold',
-                  }}>
-                 Add Post
-                </Text>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontSize: 15,
+                      color: '#1596F3',
+                      fontWeight: 'bold',
+                    }}>
+                    Add Post
+                  </Text>
                 </View>
-                <View style={{width:'40%',justifyContent:'center',alignItems:'center'}}>
-                <TouchableOpacity
-                onPress={() => {
-                  setmarkerModel(!markerModel);
-                  refRBSheet2.current.close();
+                <View
+                  style={{
+                    width: '40%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setmarkerModel(!markerModel);
+                      refRBSheet2.current.close();
+                    }}>
+                    <AntDesign
+                      name="pluscircleo"
+                      size={Theme.iconSizee}
+                      color={Theme.primary}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  elevation: 3,
+                  backgroundColor: 'white',
+                  marginBottom: 5,
                 }}>
-              <AntDesign name='pluscircleo' size={Theme.iconSizee} color={Theme.primary}/>
-              </TouchableOpacity>
-              </View>
-              </View>
-              <View style={{flexDirection:'row', alignItems:'center', elevation:3,backgroundColor:"white",marginBottom:5}}>
-              <View style={{
+                <View
+                  style={{
                     fontSize: 20,
                     marginTop: 10,
                     // borderRadius: 7,
@@ -1985,31 +2015,48 @@ null
                     marginBottom: 20,
                     // elevation: 3,
                     width: '60%',
-                    justifyContent:'center',
-                    alignItems:'center'
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    fontSize: 15,
-                    color: '#1596F3',
-                    fontWeight: 'bold',
-                  }}>
-                 Remove Post
-                </Text>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontSize: 15,
+                      color: '#1596F3',
+                      fontWeight: 'bold',
+                    }}>
+                    Remove Post
+                  </Text>
                 </View>
-                <View style={{width:'40%',justifyContent:'center',alignItems:'center'}}>
-                <TouchableOpacity
-                onPress={() => {
-                  onDeleteBTN(remove);
-                  refRBSheet2.current.close();
+                <View
+                  style={{
+                    width: '40%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      onDeleteBTN(remove);
+                      refRBSheet2.current.close();
+                    }}>
+                    <AntDesign
+                      name="minuscircleo"
+                      color={Theme.red}
+                      size={Theme.iconSizee}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  elevation: 3,
+                  backgroundColor: 'white',
+                  marginBottom: 10,
                 }}>
-              <AntDesign name='minuscircleo' color={Theme.red} size={Theme.iconSizee}/>
-              </TouchableOpacity>
-              </View>
-              </View>
-              <View style={{flexDirection:'row', alignItems:'center',  elevation:3,backgroundColor:"white",marginBottom:10}}>
-              <View style={{
+                <View
+                  style={{
                     fontSize: 20,
                     marginTop: 10,
                     // borderRadius: 7,
@@ -2020,42 +2067,53 @@ null
                     marginBottom: 20,
                     // elevation: 3,
                     width: '60%',
-                    justifyContent:'center',
-                    alignItems:'center'
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    fontSize: 15,
-                    color: '#1596F3',
-                    fontWeight: 'bold',
-                  }}>
-                 End Point
-                </Text>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontSize: 15,
+                      color: '#1596F3',
+                      fontWeight: 'bold',
+                    }}>
+                    End Point
+                  </Text>
                 </View>
-                <View style={{width:'40%',justifyContent:'center',alignItems:'center'}}>
-                <TouchableOpacity
-                 onPress={() => { endpoint(newRegion.longitude, newRegion.latitude)}}
-                >
-              <MaterialIcons name='file-download-done' color={Theme.green} size={Theme.iconSizee}/>
-              </TouchableOpacity>
+                <View
+                  style={{
+                    width: '40%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      endpoint(newRegion.longitude, newRegion.latitude);
+                    }}>
+                    <MaterialIcons
+                      name="file-download-done"
+                      color={Theme.green}
+                      size={Theme.iconSizee}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-              </View>
-              <TouchableOpacity onPress={()=>refRBSheet2.current.close()}>
-              <View style={{justifyContent:'center',alignItems:'center'}}>
-               <View style={{
-                 justifyContent:'center',
-                 alignItems:'center',
-                 marginTop:15,
-                 backgroundColor:'red',
-                 height:40,
-                 width:'50%',
-                 borderRadius:15,
-                 elevation:5
-                 }}>
-                <Text style={{color:Theme.white}}>Cancel</Text>
-              </View>
-              </View>
+              <TouchableOpacity onPress={() => refRBSheet2.current.close()}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: 15,
+                      backgroundColor: 'red',
+                      height: 40,
+                      width: '50%',
+                      borderRadius: 15,
+                      elevation: 5,
+                    }}>
+                    <Text style={{color: Theme.white}}>Cancel</Text>
+                  </View>
+                </View>
               </TouchableOpacity>
             </View>
           </KeyboardAwareScrollView>

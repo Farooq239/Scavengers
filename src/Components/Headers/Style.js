@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   cityText: {
     marginLeft: '7%',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '400',
     paddingBottom: '2%',
   },
@@ -31,10 +31,9 @@ const styles = StyleSheet.create({
   },
   headerWrap1: {
     backgroundColor: Theme.white,
-    // padding: '4%',
     flexDirection: 'row',
     position: 'absolute',
-    width: '100%',
+    // width: '100%',
   },
   flexAlign: {
     flexDirection: 'row',

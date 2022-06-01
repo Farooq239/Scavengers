@@ -101,19 +101,31 @@ const Headers = props => {
       ) : city === true ? (
         <View style={styles.headerWrap1}>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}>
-            <Image source={require('../../Assets/mapPin.png')} />
-            <Text style={styles.cityText}>{cityName}</Text>
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '83%',
+            }}>
+            <View style={{width: '10%'}}>
+              <Image
+                source={require('../../Assets/mapPin.png')}
+                style={{height: 30, width: 30}}
+              />
+            </View>
+            <View style={{width: '80%'}}>
+              <Text style={styles.cityText}>{cityName}</Text>
+            </View>
           </View>
-          <View>
+          <View
+            style={{
+              width: '20%',
+              marginLeft: '1%',
+            }}>
             <TouchableOpacity onPress={() => navigation.replace('HomePage2')}>
               <Text
                 style={{
-                  // marginTop: 5,
                   fontSize: 17,
-                  right:10,
                   color: Theme.black,
-                  // fontWeight: 'bold',
                 }}>
                 Back
               </Text>

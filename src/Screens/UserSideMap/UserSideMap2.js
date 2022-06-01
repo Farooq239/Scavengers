@@ -39,8 +39,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as geolib from 'geolib';
 import {getPreciseDistance} from 'geolib';
-import BottomSheet from 'reanimated-bottom-sheet';
-// import Animated, {set} from 'react-native-reanimated';
+// import BottomSheet from 'reanimated-bottom-sheet';
 import {GOOGLE_MAP_KEY} from '../../Constants/GoogleMapKey';
 import imagePath from '../../Constants/imagePath';
 import Theme from '../../Utils/Theme';
@@ -58,10 +57,16 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * Aspect_RATIO;
 import styles from './Style';
 
 const UserSideMap = ({props, route}) => {
-
-  const {StartAddress, EndAddress, cityy, Startcordvalue, Endcoordsvalue,CoordValue,Coord} =
-  route.params;
-  console.log('1111111111111222222',Coord);
+  const {
+    StartAddress,
+    EndAddress,
+    cityy,
+    Startcordvalue,
+    Endcoordsvalue,
+    CoordValue,
+    Coord,
+  } = route.params;
+  console.log('1111111111111222222', Coord);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalQuiz, setModalQuiz] = useState(false);
@@ -89,8 +94,6 @@ const UserSideMap = ({props, route}) => {
   const [customMarkerCords, SetcustomMarkerCords] = useState(Coord);
   // console.log('Custom Point Code',customMarkerCords.CustomMarkerCords());
   const [newpoints, setnewpoints] = useState({});
-  
-
 
   const [destinationCordss, SetdestinationCordss] = useState({
     // latitude: 31.4804642,
@@ -133,7 +136,7 @@ const UserSideMap = ({props, route}) => {
       },
     },
   ]);
-  const [CheckCoordsValue,setCheckCoordsValue] =useState([]);
+  const [CheckCoordsValue, setCheckCoordsValue] = useState([]);
   const mapRef = useRef();
   // const bs = React.useRef(null);
   const refRBSheet = useRef();
@@ -223,19 +226,19 @@ const UserSideMap = ({props, route}) => {
       {enableHighAccuracy: true, timeout: 100, maximumAge: 100},
     );
   };
-  const PointObject=()=>{
-    var arraypoints =[];
-    customMarkerCords.map((item,index)=>{
+  const PointObject = () => {
+    var arraypoints = [];
+    customMarkerCords.map((item, index) => {
       console.log(2);
-     const xyz = {
-        latitude:item.CustomMarkerCords.latitude,
-        longitude:item.CustomMarkerCords.longitude,
-     }
+      const xyz = {
+        latitude: item.CustomMarkerCords.latitude,
+        longitude: item.CustomMarkerCords.longitude,
+      };
       arraypoints.push(xyz);
       setnewpoints(arraypoints);
-     console.warn('8888888888888',arraypoints);
-    })
-  }
+      console.warn('8888888888888', arraypoints);
+    });
+  };
   useEffect(async () => {
     PointObject();
     refRBSheet.current.open();
@@ -368,41 +371,38 @@ const UserSideMap = ({props, route}) => {
     var arraycords = []; // clear existing messages
     let keys = [];
     const currentUid = auth.currentUser.uid;
-    let ref = db
-      .ref('Users/' + currentUid)
-      .child('/Posts');
-      ref.on('value', snapshot => {
-         if (!snapshot.exists) {
-           } else {
-              if (snapshot.val()) {
-                // console.log(2);
-                snapshot.forEach(doc => {
-                  console.log(doc);
-                 const {CustomMarkerCords} = doc.val().Custom_Coords;
-                 console.log(CustomMarkerCords);
-                //  SetcustomMarkerCords(doc);
-                //  console.log('11111',customMarkerCords);
-                //  doc.forEach(cordSnapshot => {
-                //    log('1111122222',cordSnapshot)
-                //   const CustomMarkerCords = cordSnapshot.val().CustomMarkerCords;
-                //   var Ccord = CustomMarkerCords;
-                //   keys.push(cordSnapshot.key);
-                //   arraycords.push(cordSnapshot.val().CustomMarkerCords);
-                // });
+    let ref = db.ref('Users/' + currentUid).child('/Posts');
+    ref.on('value', snapshot => {
+      if (!snapshot.exists) {
+      } else {
+        if (snapshot.val()) {
+          // console.log(2);
+          snapshot.forEach(doc => {
+            console.log(doc);
+            const {CustomMarkerCords} = doc.val().Custom_Coords;
+            console.log(CustomMarkerCords);
+            //  SetcustomMarkerCords(doc);
+            //  console.log('11111',customMarkerCords);
+            //  doc.forEach(cordSnapshot => {
+            //    log('1111122222',cordSnapshot)
+            //   const CustomMarkerCords = cordSnapshot.val().CustomMarkerCords;
+            //   var Ccord = CustomMarkerCords;
+            //   keys.push(cordSnapshot.key);
+            //   arraycords.push(cordSnapshot.val().CustomMarkerCords);
+            // });
             // SetcustomMarkerCords(snapshot.val());
           });
-      } 
-      else {
+        } else {
+        }
       }
-    }
-  });
-      // .then(firstSnapShot => {
-      //   firstSnapShot.forEach(cordSnapshot => {
-      //   });
-      // })
-      // .then(async () => {
-      //   // SetcustomMarkerCords(arraycords);
-      // });
+    });
+    // .then(firstSnapShot => {
+    //   firstSnapShot.forEach(cordSnapshot => {
+    //   });
+    // })
+    // .then(async () => {
+    //   // SetcustomMarkerCords(arraycords);
+    // });
   };
 
   const getcords = async () => {
@@ -643,7 +643,7 @@ const UserSideMap = ({props, route}) => {
   );
   // if (!copy) return null;
   // console.log(CoordValue);
- 
+
   return (
     <View style={{flex: 1}}>
       <Header
@@ -749,7 +749,6 @@ const UserSideMap = ({props, route}) => {
             apikey={GOOGLE_MAP_KEY}
             strokeWidth={5}
             waypoints={newpoints}
-
             image={imagePath.icGreenMaker}
             strokeColor={Theme.primary}
             onReady={result => {
@@ -822,8 +821,11 @@ const UserSideMap = ({props, route}) => {
                     // nameofpost();
                     // console.log(i);
                   }}>
-                    <Image source={require('../../Assets/images/destination.png')} style={{height: 25, width:25 }} />
-                  </Marker>
+                  <Image
+                    source={require('../../Assets/images/destination.png')}
+                    style={{height: 25, width: 25}}
+                  />
+                </Marker>
               </>
             ),
           )}
@@ -861,90 +863,93 @@ const UserSideMap = ({props, route}) => {
             style={{height: 40, width: 40, alignSelf: 'center'}}
             source={require('../../Assets/marker1.png')}
           /> */}
-          {/* <Text style={styles.geoAddress}>{address}</Text> */}
+        {/* <Text style={styles.geoAddress}>{address}</Text> */}
         {/* </View> */}
       </View>
       <RBSheet
-          ref={refRBSheet}
-          height={430}
-          closeOnDragDown={true}
-          closeOnPressMask={false}
-          customStyles={{
-            wrapper: {
-              backgroundColor: 'transparent',
-            },
-            draggableIcon: {
-              backgroundColor: '#000',
-            },
-          }}>
-         <View style={styles.panel}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{width: '10%'}}>
-          <Image
-            source={require('../../Assets/mapPin.png')}
-            style={styles.imgMarker}
-          />
-        </View>
-        <View style={{width: '85%'}}>
-          <Text style={styles.txtTitle}>{cityy}</Text>
-          <View>
-            <Text style={styles.txtCreatedBy}>
-              created by{' '}
-              <Text style={{...styles.txtCreatedBy, color: '#1596F3'}}>
-                {/* {Username}{' '} */}
-                Farooq
-              </Text>
-            </Text>
-            <View style={{alignSelf: 'flex-start'}}>
-              <AirbnbRating size={15} showRating={false} />
+        ref={refRBSheet}
+        height={430}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'transparent',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        <View style={styles.panel}>
+          <View style={{flexDirection: 'row'}}>
+            <View style={{width: '10%'}}>
+              <Image
+                source={require('../../Assets/mapPin.png')}
+                style={styles.imgMarker}
+              />
             </View>
-
-            <View>
-              <Text
-                style={{
-                  ...styles.txtCreatedBy,
-                  color: '#959494',
-                  marginTop: '3%',
-                  width: '100%',
-                }}>
-                {description}
-              </Text>
-              {/* <Text style={styles.txtPosts}>3 POSTS</Text> */}
-              <View style={styles.boxWrap}>
-              <View style={{width:'95%'}}>
-                <Text style={styles.txtStatus}>{StartAddress}</Text>
+            <View style={{width: '85%'}}>
+              <Text style={styles.txtTitle}>{cityy}</Text>
+              <View>
+                <Text style={styles.txtCreatedBy}>
+                  created by{' '}
+                  <Text style={{...styles.txtCreatedBy, color: '#1596F3'}}>
+                    {/* {Username}{' '} */}
+                    Farooq
+                  </Text>
+                </Text>
+                <View style={{alignSelf: 'flex-start'}}>
+                  <AirbnbRating size={15} showRating={false} />
                 </View>
 
-                <Image
-                  source={require('../../Assets/mapPin.png')}
-                  style={styles.ImgPin}
-                />
-              </View>
-              <View style={{marginTop: '2%'}}></View>
-              <View style={styles.boxWrap}>
-              <View style={{width:'95%'}}>
-                <Text style={styles.txtStatus}>{EndAddress}</Text>
+                <View>
+                  <Text
+                    style={{
+                      ...styles.txtCreatedBy,
+                      color: '#959494',
+                      marginTop: '3%',
+                      width: '100%',
+                    }}>
+                    {description}
+                  </Text>
+                  {/* <Text style={styles.txtPosts}>3 POSTS</Text> */}
+                  <View style={styles.boxWrap}>
+                    <View style={{width: '95%'}}>
+                      <Text style={styles.txtStatus}>{StartAddress}</Text>
+                    </View>
+
+                    <Image
+                      source={require('../../Assets/mapPin.png')}
+                      style={styles.ImgPin}
+                    />
+                  </View>
+                  <View style={{marginTop: '2%'}}></View>
+                  <View style={styles.boxWrap}>
+                    <View style={{width: '95%'}}>
+                      <Text style={styles.txtStatus}>{EndAddress}</Text>
+                    </View>
+                    <Image
+                      source={require('../../Assets/mapPin.png')}
+                      style={styles.ImgPin}
+                    />
+                  </View>
                 </View>
-                <Image
-                  source={require('../../Assets/mapPin.png')}
-                  style={styles.ImgPin}
-                />
+                <TouchableOpacity
+                  style={styles.btnNavigate}
+                  onPress={() => {
+                    functionCombined();
+                    // onDone();
+                    refRBSheet.current.close();
+                  }}>
+                  <Text style={styles.txtNavigate}>
+                    {' '}
+                    Navigate to StartPoint
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.btnNavigate}
-              onPress={() => {
-                functionCombined();
-                // onDone();
-                refRBSheet.current.close();
-              }}>
-              <Text style={styles.txtNavigate}> Navigate to StartPoint</Text>
-            </TouchableOpacity>
           </View>
         </View>
-      </View>
-    </View>
-        </RBSheet>
+      </RBSheet>
       {customMarkerCords.map((i, ind) => (
         // console.log('i value of modal===', i),
         <Modal
